@@ -16,11 +16,13 @@ jobs:
           env:
             ENV_PATH: environment/QS
         - name: Upload Test Reports
+          if: success() || failure() 
           uses: actions/upload-artifact@v2
           with:
             name: reports
             path: .tmp/report/
         - name: Upload Logs
+          if: success() || failure() 
           uses: actions/upload-artifact@v2
           with:
             name: logs
