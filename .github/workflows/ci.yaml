@@ -9,16 +9,19 @@ jobs:
         - uses: actions/setup-node@v3
           with:
             node-version: 18
-        - name: Install
-          run: npm ci
+        - name: Setup
+          run: npm install
         - name: Test
-          run: npm run ${{ matrix.exampleDir }}
-          working-directory: ${{ matrix.exampleDir }}
-        - name: 🐛 Debug Build
-          uses: stateful/vscode-server-action@v1
-          if: failure()
-        - uses: actions/upload-artifact@v1
-          if: failure()
+          run: npm run wdio
+          env:
+            ENV_PATH: environment/QS
+        - name: Upload Test Reports
+          uses: actions/upload-artifact@v2
+          with:
+            name: reports
+            path: .tmp/report/
+        - name: Upload Logs
+          uses: actions/upload-artifact@v2
           with:
             name: logs
-            path: ${{ matrix.exampleDir }}/logs
+            path: log/
