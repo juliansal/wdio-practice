@@ -28,5 +28,6 @@ jobs:
             name: logs
             path: log/
         - name: Upload GitHub Pages artifact
+          if: success() || failure() 
           uses: actions/upload-pages-artifact@v3.0.1
     
