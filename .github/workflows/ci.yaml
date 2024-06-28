@@ -19,6 +19,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
   tests:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,6 +45,11 @@ jobs:
         with:
           name: github-pages
           path: .tmp/report/
+  publish:
+    needs: tests
+    if: success() || failure() 
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         if: success() || failure()
         id: deployment
