@@ -8,5 +8,5 @@ Feature: The Internet Guinea Pig Website Four
 
     Examples:
       | username | password             | message                        |
-      | tomsmith | SuperSecretPassword! | You logged into a secure area! |
+      | tomsmith | SuperSecretPassword! | You logged NOT into a secure area! |
       | foobar   | barfoo               | Your username is invalid!      |
