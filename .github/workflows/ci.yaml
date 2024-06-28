@@ -44,25 +44,19 @@ jobs:
         if: success() || failure() 
         uses: actions/upload-artifact@v2
         with:
-          name: _site
+          name: github-pages
           path: .tmp/report/
-      # - name: Upload Logs
-      #   if: success() || failure() 
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: logs
-      #     path: log/
       - name: Upload GitHub Pages artifact
         if: success() || failure() 
         uses: actions/upload-pages-artifact@v3.0.1
         with:
-          name: _site
+          name: github-pages
           path: .tmp/report/
       - name: Deploy to GitHub Pages
         if: success() || failure()
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          name: _site
-          path: .tmp/report/
+        # with:
+        #   name: _site
+        #   path: .tmp/report/
     
