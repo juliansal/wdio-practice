@@ -17,6 +17,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
   tests:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,6 +30,7 @@ jobs:
       - name: Test
         run: npm run wdio
   generate-report:
+    needs: [setup, tests]
     runs-on: ubuntu-latest
     steps:
       - name: Upload GitHub Pages artifact
@@ -38,6 +40,7 @@ jobs:
           name: github-pages
           path: .tmp/report/
   publish-report:
+    needs: generate-report
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
