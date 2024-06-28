@@ -19,7 +19,7 @@ jobs:
           if: success() || failure() 
           uses: actions/upload-artifact@v2
           with:
-            name: _site/
+            name: _site
             path: .tmp/report/
         - name: Upload Logs
           if: success() || failure() 
