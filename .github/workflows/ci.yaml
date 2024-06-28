@@ -30,6 +30,7 @@ jobs:
       - name: Test
         run: npm run wdio
   generate-report:
+    if: success() || failure()
     needs: [setup, tests]
     runs-on: ubuntu-latest
     steps:
@@ -40,6 +41,7 @@ jobs:
           name: github-pages
           path: .tmp/report/
   publish-report:
+    if: success() || failure() 
     needs: generate-report
     runs-on: ubuntu-latest
     steps:
