@@ -62,4 +62,7 @@ jobs:
         if: success() || failure()
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          name: _site
+          path: .tmp/report/
     
