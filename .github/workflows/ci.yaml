@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           name: github-pages
-          path: .tmp/report/
+          path: artifact/
   publish-report:
     if: success() || failure() 
     needs: generate-report
