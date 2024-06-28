@@ -8,17 +8,15 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 jobs:
-  deploy:
+  setup:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-  build:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,17 +28,22 @@ jobs:
         run: npm install
       - name: Test
         run: npm run wdio
-        # env:
-        #   ENV_PATH: environment/QS
+  generate-report:
+    runs-on: ubuntu-latest
+    steps:
       - name: Upload GitHub Pages artifact
         if: success() || failure() 
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           name: github-pages
           path: .tmp/report/
+  publish-report:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         if: success() || failure()
         id: deployment
         uses: actions/deploy-pages@v4
+
 
     
