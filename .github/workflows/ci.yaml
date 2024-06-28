@@ -14,10 +14,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
   tests:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,30 +30,26 @@ jobs:
         run: npm install
       - name: Test
         run: npm run wdio
-  generate-report:
-    if: success() || failure()
-    needs: [setup, tests]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        env:
+          ENV_PATH: environment/QS
+      # - name: Upload Test Reports
+      #   if: success() || failure() 
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: github-pages
+      #     path: .tmp/report/
       - name: Upload GitHub Pages artifact
         if: success() || failure() 
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           name: github-pages
-          path: artifact/
-  publish-report:
-    if: success() || failure() 
-    needs: generate-report
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+          path: .tmp/report/
       - name: Deploy to GitHub Pages
         if: success() || failure()
         id: deployment
         uses: actions/deploy-pages@v4
-
+        # with:
+        #   name: _site
+        #   path: .tmp/report/
 
     
